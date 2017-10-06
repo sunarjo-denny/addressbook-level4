@@ -84,11 +84,11 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-            
+        
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMMAND_ALIAS:
             return new RemarkCommand();
-            
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
