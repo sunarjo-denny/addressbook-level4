@@ -19,7 +19,7 @@ public class RemarkCommand extends UndoableCommand {
             + "Parameters: INDEX (must be positive integer) " + PREFIX_REMARK + "[REMARK]\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_REMARK + "Hates coffee.";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$d";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
 
     private final Index index;
     private final String remark;
