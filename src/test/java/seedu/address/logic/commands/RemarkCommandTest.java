@@ -18,6 +18,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Remark;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -36,10 +37,10 @@ public class RemarkCommandTest {
 
     @Test
     public void equals() {
-        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_DENNY);
+        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_DENNY));
 
         // test for same value
-        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_DENNY);
+        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_DENNY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // test for same object
@@ -52,16 +53,16 @@ public class RemarkCommandTest {
         assertFalse(standardCommand.equals(new DeleteCommand(INDEX_FIRST_PERSON)));
 
         // test for different index
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, VALID_REMARK_DENNY)));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_DENNY))));
 
         // test for different remark
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_ZENGHOU)));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_ZENGHOU))));
     }
     /**
      * Returns an {@RemarkCommand} with parameters {@code index} and {@code remark}
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
-        RemarkCommand remarkCommand = new RemarkCommand(index, remark);
+        RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
