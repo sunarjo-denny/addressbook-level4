@@ -148,7 +148,7 @@ public class AddressBookParserTest {
     public void parseCommand_remark() throws Exception {
         final String remark = "Some remark";
         RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
-            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark); 
+            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
 }
