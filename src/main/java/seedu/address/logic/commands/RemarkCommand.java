@@ -41,7 +41,7 @@ public class RemarkCommand extends UndoableCommand {
         throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), remark));
     }
 
-    @Override 
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
