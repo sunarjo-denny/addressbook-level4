@@ -1,10 +1,9 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-import java.util.function.Predicate;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+
+import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -51,7 +50,7 @@ public class RemarkCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if(index.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -70,8 +69,11 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Display success message of adding or removing remarks
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if(!remark.value.isEmpty()) {
+        if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
         } else {
             return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
