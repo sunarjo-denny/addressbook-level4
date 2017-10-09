@@ -41,13 +41,13 @@ public class RemarkCommand extends UndoableCommand {
         throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), remark));
     }
 
-    @Override
-    public boolean equals(Object other) { 
-        if(other == this) {
+    @Override 
+    public boolean equals(Object other) {
+        if (other == this) {
             return true;
         }
-        
-        if(!(other instanceof RemarkCommand)) {
+
+        if (!(other instanceof RemarkCommand)) {
             return false;
         }
 
