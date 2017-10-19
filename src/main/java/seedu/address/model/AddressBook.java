@@ -162,17 +162,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    /**
-     * Removes the given Tag from all Persons stored in the address book, and from the UniqueTagList.
-     * @param tag to be removed
-     */
-    public void deleteTag(Tag tag) {
-        // TODO: remove tags from UniqueTagList and from all Persons
-        tags.removeTag(tag);
-        persons.removeTag(tag);
-
-    }
-
     //// util methods
 
     @Override

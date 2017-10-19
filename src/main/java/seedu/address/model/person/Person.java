@@ -22,8 +22,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+
     private ObjectProperty<UniqueTagList> tags;
-    private ObjectProperty<Remark> remark;
 
     /**
      * Every field must be present and not null.
@@ -36,7 +36,6 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.remark = new SimpleObjectProperty<>(new Remark(""));
     }
 
     /**
@@ -45,7 +44,6 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
-        this.remark = new SimpleObjectProperty<>(source.getRemark());
     }
 
     public void setName(Name name) {
@@ -104,21 +102,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    @Override
-    public void setRemark(Remark remark) {
-        this.remark.set(remark);
-    }
-
-    @Override
-    public Remark getRemark() {
-        return remark.get();
-    }
-
-    @Override
-    public ObjectProperty<Remark> remarkProperty() {
-        return remark;
-    }
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -144,15 +127,6 @@ public class Person implements ReadOnlyPerson {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyPerson) other));
-    }
-
-    /**
-     * Removes the specified Tag from this person's tags
-     * @param tag
-     */
-    @Override
-    public void removeTag(Tag tag) {
-        tags.getValue().removeTag(tag);
     }
 
     @Override

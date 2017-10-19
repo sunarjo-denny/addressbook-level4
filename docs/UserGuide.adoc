@@ -57,8 +57,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-Shorthand for add: `a`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -71,14 +70,12 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list` +
-Shorthand for list: `l`
+Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-Shorthand for edit: `e`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -98,8 +95,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
-Shorthand for find: `f`
+Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -116,35 +112,10 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by details: `search`
-
-Finds persons whose details contain any of the given keywords. +
-Format: `search KEYPHRASE` +
-Shorthand for search: `sh`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* Keyphrase can be separated by spaces.
-* The order of the keyphrase matters. e.g. `Hans Bo` will match `Hans Bo`
-* Name, Phone, Email, Address, Remark, Tag are all searched.
-* Full or partial words will be matched e.g. `Han` will match `Hans Solo`
-* Persons matching the keyphrase will be returned. e.g. `@gmail.com` will return `HansGruber@gmail.com`, `BoYang@gmail.com`
-****
-
-Examples:
-
-* `search John` +
-Returns `john` and `John Doe`
-* `search joHn dOe` +
-Returns any person having names `John Doe`
-* `search mate` +
-Returns any person with details that matches `mate` such as `classmate` in tags.
-
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX` +
-Shorthand for delete: `d`
+Format: `delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -164,8 +135,7 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` +
-Shorthand for select: `s`
+Format: `select INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -196,8 +166,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Shorthand for undo: `u`
+Format: `undo`
 
 [NOTE]
 ====
@@ -223,8 +192,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo` +
-Shorthand for redo: `r`
+Format: `redo`
 
 Examples:
 
@@ -248,7 +216,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
-Shorthand for clear: `c`
 
 === Exiting the program : `exit`
 
