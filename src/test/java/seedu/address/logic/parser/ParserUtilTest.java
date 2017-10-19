@@ -5,9 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.logic.parser.ParserUtil.parseIndexList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_LIST_FIRST_TO_THIRD;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,18 +61,6 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
-    }
-
-    @Test
-    public void parseIndexList_validInput_success() throws Exception {
-        // separated by whitespaces
-        assertEquals(INDEX_LIST_FIRST_TO_THIRD, ParserUtil.parseIndexList("1 2 3"));
-
-        // separated by ","
-        assertEquals(INDEX_LIST_FIRST_TO_THIRD, parseIndexList("1, 2, 3"));
-
-        // Leading and trailing whitespaces and ","s
-        assertEquals(INDEX_LIST_FIRST_TO_THIRD, parseIndexList("  ,, ,1, 2 3  ,,"));
     }
 
     @Test

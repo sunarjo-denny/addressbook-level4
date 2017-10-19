@@ -68,13 +68,4 @@ public class StringUtil {
             return false;
         }
     }
-
-    /**
-     * Returns true if {@code detail} contains {@code keyphrase}, case insensitive.
-     * @param detail to be checked against
-     * @param keyphrase to be checked
-     */
-    public static boolean caseInsensitiveContains(String detail, String keyphrase) {
-        return detail.toLowerCase().contains(keyphrase.toLowerCase());
-    }
 }
