@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<personList>
+    <persons>
+        <name>Amy Bee</name>
+        <phone>11111111</phone>
+        <email>amy@example.com</email>
+        <address>Block 312, Amy Street 1</address>
+        <remark></remark>
+        <tagged>friend</tagged>
+    </persons>
+</personList>

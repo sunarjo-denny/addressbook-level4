@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<personList>
+    <persons>
+        <name>Ida Mueller</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Ida Mueller</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+    </persons>
+</personList>
