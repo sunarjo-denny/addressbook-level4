@@ -171,7 +171,7 @@ public class AddressBookParserTest {
         SelectCommand commandAlias = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), mixedCaseCommand);    
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), mixedCaseCommand);
         assertEquals(command, commandAlias);
     }
 
