@@ -98,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== User Credentials Accessors =================================================================
 
+    //@@author zenghou
     /**
      * Returns userCreds to be used by Logic component for user verification
      */
@@ -106,15 +107,18 @@ public class ModelManager extends ComponentManager implements Model {
         return userCreds;
     }
 
+    //@@author zenghou
     @Override
     public synchronized void updateUserCreds() {
         indicateUserCredsChanged();
     }
 
+    //@@author zenghou
     /** Raises an event to indicate the UserCreds has changed */
     private synchronized void indicateUserCredsChanged() {
         raise(new UserCredsChangedEvent());
     }
+    //@@author
 
     @Override
     public void sortPersonList(Comparator<ReadOnlyPerson> comparator, boolean isReversed)

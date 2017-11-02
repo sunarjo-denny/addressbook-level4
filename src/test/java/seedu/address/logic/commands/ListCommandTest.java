@@ -35,6 +35,7 @@ public class ListCommandTest {
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -47,6 +48,8 @@ public class ListCommandTest {
         assertCommandFailure(listCommand, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
+
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);

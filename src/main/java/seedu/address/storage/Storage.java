@@ -21,11 +21,14 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserCreds
     @Override
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
 
+    //@@author zenghou
     @Override
     Optional<UserCreds> readUserCreds() throws DataConversionException, IOException;
 
+    //@@author zenghou
     @Override
     void saveUserCreds(UserCreds userCreds) throws IOException;
+    //@@author
 
     @Override
     String getAddressBookFilePath();

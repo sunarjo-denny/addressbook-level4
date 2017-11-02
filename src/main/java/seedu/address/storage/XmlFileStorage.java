@@ -36,6 +36,7 @@ public class XmlFileStorage {
         }
     }
 
+    //@@author HanYaodong
     /**
      * Returns person list in the file or an empty address book
      */

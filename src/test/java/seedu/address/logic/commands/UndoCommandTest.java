@@ -34,6 +34,7 @@ public class UndoCommandTest {
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -45,6 +46,7 @@ public class UndoCommandTest {
         assertCommandFailure(deleteCommandOne, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute() throws Exception {

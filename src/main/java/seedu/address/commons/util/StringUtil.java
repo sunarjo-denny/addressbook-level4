@@ -17,6 +17,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -96,6 +97,7 @@ public class StringUtil {
         return detail.toLowerCase().contains(keyphrase.toLowerCase());
     }
 
+    //@@author HanYaodong
     /**
      * Returns the command words in the program as an Array.
      */
@@ -111,6 +113,7 @@ public class StringUtil {
                             HistoryCommand.COMMAND_WORD,
                             ImportCommand.COMMAND_WORD,
                             ListCommand.COMMAND_WORD,
+                            LoginCommand.COMMAND_WORD,
                             RedoCommand.COMMAND_WORD,
                             RemarkCommand.COMMAND_WORD,
                             SearchCommand.COMMAND_WORD,

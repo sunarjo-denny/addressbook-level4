@@ -15,6 +15,7 @@ import seedu.address.model.user.UserPrefs;
 
 public class ClearCommandTest {
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -24,6 +25,7 @@ public class ClearCommandTest {
         assertCommandFailure(prepareCommand(userCredsNotValidatedModel), userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute_emptyAddressBook_success() {

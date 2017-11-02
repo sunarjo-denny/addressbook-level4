@@ -31,10 +31,12 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
     }
 
+    //@@author HanYaodong
     @Override
     public String autoCompleteCommand(String command) {
         return AutoComplete.autoComplete(command, model.getFilteredPersonList());
     }
+    //@@author
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {

@@ -38,6 +38,7 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -52,6 +53,7 @@ public class EditCommandTest {
         assertCommandFailure(cmd, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {

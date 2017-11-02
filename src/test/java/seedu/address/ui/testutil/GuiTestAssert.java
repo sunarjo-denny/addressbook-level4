@@ -6,6 +6,7 @@ import java.util.List;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.PersonProfileHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -65,5 +66,16 @@ public class GuiTestAssert {
      */
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertProfileEquals(ReadOnlyPerson expectedPerson, PersonProfileHandle actualProfile) {
+        assertEquals("PROFILE", actualProfile.getProfile());
+        assertEquals(expectedPerson.getName().fullName, actualProfile.getName());
+        assertEquals(expectedPerson.getRemark().toString(), actualProfile.getRemark());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualProfile.getTags());
     }
 }

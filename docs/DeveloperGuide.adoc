@@ -422,9 +422,9 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 
 We are currently using a simple authenticating method to validate users. In summary, the user's username and password would be compared to the username and password stored in a file called `credentials.json`. More precisely, the password is stored as a hash value, using Java's `String#hashCode()` method to prevent the password from being openly stored.
 
-Before the user is logged in, the user would not be able to execute any commands. In this version, the user is still able to view the loaded list of contacts. In V1.4, the addressbook will not be loaded until the user is logged in.
+Before the user is logged in, the user would not be able to execute any commands. In this version, the user is still able to view the loaded list of contacts. In V1.5, the addressbook will not be loaded until the user is logged in.
 
-* Mechanism *
+*Mechanism*
 
 A `LoginCommandParser` parses a user's username and password, and returns a `LoginCommand`. The username and password entered by the user would be encapsulated in a class `UserCreds`, which is a private attribute in the `LoginCommand`. When the `execute` method is called, the `UserCreds` attribute in the `LoginCommand` would be compared against the `UserCreds` in the model. The model gets `UserCreds` attribute by reading the JSON file `credentials.json`.
 
@@ -448,6 +448,53 @@ Once the user is logged in, every `Command` will check if the current user is va
 **Alternative 3:** Show all panles, but only load addressbook once user is logged in. +
 **Pros:** No changes needed for GUI +
 **Cons:** Unauthorized users are still able to view the contact list, which may not be desirable
+
+=== Contact Profile Picture
+
+We are using `facebook4j` package as a wrapper to access Facebook's Graph API. The `Facebook` class is used as an API to access the methods.
+
+This class is used only in `PersonProfile` class, where there is a need to retrieve a contact's profile picture from Facebook to use as a contact profile picture. The method `facebook#getPictureURL(String userId, PictureSize size)` is used to retrieve a larger image from Facebook.
+
+[Note] The application is currently authorized with an application token that will expire in 2 months.
+
+In the event that an image cannot be retrieved from Facebook, a default image stored locally would be used as the contact's profile picture.
+
+**Aspect** Retrieving a user's Facebook profile picture +
+**Alternative 1 (temporary fix)**: Hard code a Facebook userId, which will be used to retrieve a profile picture from the user. +
+**Alternative 2**: Figure out how to retrieve userId from a Facebook user's username or url. +
+**Alternative 3**: Introduce another 3rd party library that returns a userId from a username +
+**Pros**: Able to quickly prototype with the temporary fix +
+**Cons**: The profile picture does not match the actual contact
+
+**Aspect** Facebook Authentication +
+**Alternative 1 (current choice)**: Create a Facebook application and store the app id, app secret and token in the `PersonProfile` class. +
+**Alternative 2**: Get users to log in with their own Facebook accounts and grant permission +
+**Pros**: Hassle free for users +
+**Cons**: The app id, app secret and token are stored in the open, which may pose security issues.
+
+=== Auto-Complete
+
+All auto-complete functions are implemented in one class, `AutoComplete`, including command fill-in and command word guess. +
+
+When user hits `TAB` in the CommandBox, or when a `ParserException` or `CommandException` is thrown, `CommandBox` will call `LogicManager#autoComplete` and set text to the return String. `LogicManager#autoComplete` will call `AutoComplete` class, which will return auto-completed command, with current `filteredPersonList`. +
+
+Inside `AutoComplete` class, a parser will split the command into command word and arguments. The command word will be matched to the existing commands, if it can be matched, corresponding autoComplete method will be called with arguments. (e. g. if the command is "add n/", `addCommandAutoComplete()` will be called) If the command word is invalid, we will try to do a prefix match, and return the suggested command. If the prefix cannot match, a fuzzy search method will be called. +
+
+The fuzzy search calculates levenshtein distance to represent the similarity of two String. If the distance is smaller than half of the length of the correct command word, it will be considered as a hit. For example, if the input command is "port", the levenshtein distance between "port" and "export" will be 2, which is smaller than half of the length of "export" which is 3. So it will be considered as a hit. +
+
+If the command word of the input command is correct, corresponding auto-complete method will be called with argument. These methods do similar things including trimming unnecessary whitespaces, removing non-digit chars when an index is expected, generating all the prefixes that a command needs, filling in fields of a person in filteredPersonList when editing. +
+
+The final return String will be the auto-completed command or a suggestion of possible commands, and will be shown in the CommandBox for further editing.
+
+==== Design Consideration
+
+**Aspect** Method of approximate string matching +
+**Alternative 1 (current choice):** Levenshtein distance. +
+**Pros:** Easy to implement and acceptable performance in a small system (18 available commands). +
+**Cons:** Could run slow in a larger system and the matching acurrate is low. +
+**Alternative 2:** More advanced matching methods (e. g. Bitap algorithm). +
+**Pros:** More accurate search with better performance. +
+**Cons:** Much more difficult to implement. +
 
 === Logging
 

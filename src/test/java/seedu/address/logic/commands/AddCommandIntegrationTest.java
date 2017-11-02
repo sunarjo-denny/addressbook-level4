@@ -23,12 +23,13 @@ public class AddCommandIntegrationTest {
 
     private Model model;
 
+    //@@author zenghou
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
         model.getUserCreds().validateCurrentSession(); // validate user
     }
-
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         Person validPerson = new PersonBuilder().build();
@@ -40,6 +41,7 @@ public class AddCommandIntegrationTest {
         assertCommandFailure(prepareCommand(validPerson, userCredsNotValidatedModel), userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute_newPerson_success() throws Exception {

@@ -90,12 +90,14 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author HanYaodong
     /**
      * Auto-completes the command in the command box.
      */
     private void autoComplete() {
         replaceText(logic.autoCompleteCommand(commandTextField.getText()));
     }
+    //@@author
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and

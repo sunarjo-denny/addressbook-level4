@@ -51,20 +51,24 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // ================ UserCreds methods ==============================
 
+    //@@author zenghou
     @Override
     public String getUserCredsFilePath() {
-        return userPrefsStorage.getUserPrefsFilePath();
+        return userCredsStorage.getUserCredsFilePath();
     }
 
+    //@@author zenghou
     @Override
     public Optional<UserCreds> readUserCreds() throws DataConversionException, IOException {
         return userCredsStorage.readUserCreds();
     }
 
+    //@@author zenghou
     @Override
     public void saveUserCreds(UserCreds userCreds) throws IOException {
         userCredsStorage.saveUserCreds(userCreds);
     }
+    //@@author
 
 
     // ================ AddressBook methods ==============================

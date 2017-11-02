@@ -1,3 +1,4 @@
+//@@author zenghou
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -19,6 +20,13 @@ public class Remark {
     public Remark(String remark) {
         requireNonNull(remark);
         this.value = remark;
+    }
+
+    /**
+     * Returns an empty Birthday object.
+     */
+    public static Remark getEmptyRemark() {
+        return new Remark("");
     }
 
     @Override

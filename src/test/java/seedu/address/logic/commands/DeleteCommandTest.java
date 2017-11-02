@@ -29,6 +29,7 @@ public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -38,6 +39,7 @@ public class DeleteCommandTest {
         assertCommandFailure(prepareCommand(INDEX_FIRST_PERSON), userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {

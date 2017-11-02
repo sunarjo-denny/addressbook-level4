@@ -126,6 +126,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author HanYaodong
     @Test
     public void handleKeyPress_startingWithTab() {
         commandBoxHandle.runAutoComplete("ed");
@@ -134,6 +135,7 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.runAutoComplete("edit 1a");
         assertEquals(commandBoxHandle.getInput(), "edit 1 ");
     }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

@@ -22,6 +22,10 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
+        if (birthday.isEmpty()) {
+            this.value = "";
+            return;
+        }
         String trimmedBirthday = birthday.trim();
         if (!isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
@@ -30,11 +34,27 @@ public class Birthday {
     }
 
     /**
+     * Creates Birthday that is empty.
+     */
+    private Birthday() {
+        this.value = "";
+    }
+
+    /**
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidBirthday(String test) {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
     }
+
+    //@@author HanYaodong
+    /**
+     * Returns an empty Birthday object.
+     */
+    public static Birthday getEmptyBirthday() {
+        return new Birthday();
+    }
+    //@@author
 
     @Override
     public String toString() {

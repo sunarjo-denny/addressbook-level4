@@ -40,6 +40,7 @@ public class Config {
         this.userPrefsFilePath = userPrefsFilePath;
     }
 
+    //@@author zenghou
     public String getUserCredsFilePath() {
         return userCredsFilePath;
     }
@@ -47,6 +48,7 @@ public class Config {
     public void setUserCredsFilePath(String userCredsFilePath) {
         this.userCredsFilePath = userCredsFilePath;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

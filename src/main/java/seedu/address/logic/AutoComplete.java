@@ -1,3 +1,4 @@
+//@@author HanYaodong
 package seedu.address.logic;
 
 import static java.util.Objects.requireNonNull;
@@ -10,12 +11,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_STRING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME_STRING;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +38,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.ImportCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -69,6 +75,9 @@ public class AutoComplete {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return editCommandAutoComplete(arguments, filteredPersonList);
+
+        case LoginCommand.COMMAND_WORD:
+            return loginCommandAutoComplete(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -187,6 +196,16 @@ public class AutoComplete {
      */
     private static String importCommandAutoComplete(String args) {
         return ImportCommand.COMMAND_WORD + " " + args.trim();
+    }
+
+    /**
+     * Auto-completes login command.
+     */
+    private static String loginCommandAutoComplete(String args) {
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
+        return LoginCommand.COMMAND_WORD + " "
+            + formatPrefixWithArgs(argumentMultimap, PREFIX_USERNAME) + " "
+            + formatPrefixWithArgs(argumentMultimap, PREFIX_PASSWORD);
     }
 
     /**
@@ -318,6 +337,10 @@ public class AutoComplete {
                 .collect(Collectors.joining(" "));
         case PREFIX_REMARK_STRING:
             return prefix.getPrefix() + firstArg.get().trim();
+        case PREFIX_USERNAME_STRING:
+            return prefix.getPrefix() + firstArg.orElse("");
+        case PREFIX_PASSWORD_STRING:
+            return prefix.getPrefix() + firstArg.orElse("");
         default:
             return prefix.getPrefix();
         }

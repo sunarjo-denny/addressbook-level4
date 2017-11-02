@@ -166,6 +166,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author zenghou
         @Override
         public void updateUserCreds() {
             fail("This method should not be called");
@@ -178,6 +179,7 @@ public class AddCommandTest {
             userCreds.validateCurrentSession();
             return userCreds;
         }
+        //@@author
     }
 
     /**

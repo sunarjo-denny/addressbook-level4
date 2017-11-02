@@ -60,6 +60,10 @@ Validates the current user before executing commands. +
 Format: `login`
 
 [NOTE]
+Default username: admin
+Default password: password
+
+[NOTE]
 User must be logged in before executing commands.
 
 Format:
@@ -69,7 +73,7 @@ Format:
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 Shorthand for add: `a`
 
 [TIP]
@@ -102,7 +106,7 @@ Examples:
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 Shorthand for edit: `e`
 
 ****
@@ -322,6 +326,21 @@ Shorthand for clear: `c`
 
 Exits the program. +
 Format: `exit`
+
+=== Auto-complete commands
+
+Address book has auto-complete function for the commands. If you hit `TAB` in the command box or if you try to execute an error command, the command box will show the auto-completed command and suggestions. +
+
+The auto-complete function will work in the following ways:
+
+* fill in fields that is not been inputed by the user. (add, edit)
+* remove non-digit characters when an index is expected. (delete, export, select)
+* try to find the position of the delimiter when it cannot be found. (export)
+* trim unnecessary white spaces.
+* complete the command when the prefix of a certain command is inputted.
+* try to guess what command is being inputting when the command word is invalid.
+
+Since v1.3.
 
 === Saving the data
 

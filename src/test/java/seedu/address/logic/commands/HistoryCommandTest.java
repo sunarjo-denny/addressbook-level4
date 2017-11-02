@@ -28,6 +28,7 @@ public class HistoryCommandTest {
         historyCommand.setData(model, history, new UndoRedoStack());
     }
 
+    //@@author zenghou
     @Test
     public void execute_invalidUser_failure() throws Exception {
         String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
@@ -41,6 +42,7 @@ public class HistoryCommandTest {
         assertCommandFailure(historyCommand, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
+    //@@author
 
     @Test
     public void execute() {
