@@ -37,14 +37,11 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
         bindListeners(person);
     }
 
@@ -57,14 +54,6 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
-    }
-
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override

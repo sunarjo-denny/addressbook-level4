@@ -5,14 +5,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" prefHeight="135.0" prefWidth="227.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="112.0" prefWidth="227.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane prefHeight="127.0" prefWidth="213.0" HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -61,22 +60,11 @@
          <Label fx:id="email" styleClass="cell_small_label" text="\$email" translateX="10.0" translateY="4.0" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-         <children>
-            <ImageView fitHeight="20.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateX="6.0" translateY="2.0">
-               <image>
-                  <Image url="@../images/tags.jpeg" />
-               </image>
-            </ImageView>
-         <FlowPane fx:id="tags" translateX="10.0" translateY="4.0" />
-         </children>
-      </HBox>
       <rowConstraints>
          <RowConstraints maxHeight="99.0" minHeight="30.0" prefHeight="30.0" />
          <RowConstraints maxHeight="105.0" minHeight="25.0" prefHeight="25.0" />
          <RowConstraints maxHeight="114.0" minHeight="25.0" prefHeight="25.0" />
          <RowConstraints maxHeight="104.0" minHeight="25.0" prefHeight="25.0" />
-         <RowConstraints maxHeight="104.0" minHeight="30.0" prefHeight="30.0" />
       </rowConstraints>
   </GridPane>
 </HBox>
