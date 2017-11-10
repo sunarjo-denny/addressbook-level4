@@ -55,7 +55,7 @@ public class ImportCommandTest {
         assertCommandFailure(importCommand, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
-    //@@author
+    //@@author HanYaodong
 
     @Test
     public void equals() {

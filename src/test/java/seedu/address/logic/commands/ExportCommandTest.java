@@ -67,7 +67,7 @@ public class ExportCommandTest {
         assertCommandFailure(exportCommand, userCredsNotValidatedModel,
                 userNotLoggedInMessage);
     }
-    //@@author
+    //@@author HanYaodong
 
     @Test
     public void equals() {
