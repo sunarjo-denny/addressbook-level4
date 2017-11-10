@@ -8,14 +8,11 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+==== Implementation
 
-==== External behavior
-
----
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sorting]
 
 #End of Extract#
 
@@ -23,27 +20,13 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Sorting is useful for user to sort out their contact list to find their contacts in alphabetical order (or reverse alphabetical order)
 
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
-
----
-
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Updated the GUI color scheme for a cleaner look (https://github.com/CS2103AUG2017-F11-B4/main/pull/45[#45], https://github.com/CS2103AUG2017-F11-B4/main/pull/61[#61])
+* Wrote additional tests to increase coverage from 90% to 92% (https://github.com/CS2103AUG2017-F11-B4/main/pull/60[#60])
 
 == Project: PowerPointLabs
 
