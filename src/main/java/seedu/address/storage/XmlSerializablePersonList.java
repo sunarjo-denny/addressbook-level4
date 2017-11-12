@@ -31,7 +31,7 @@ public class XmlSerializablePersonList extends XmlSerializableData {
     }
 
     /**
-     * Conversion
+     * Conversion.
      */
     public XmlSerializablePersonList(List<ReadOnlyPerson> persons) {
         this();
@@ -39,7 +39,7 @@ public class XmlSerializablePersonList extends XmlSerializableData {
     }
 
     /**
-     * Conversion
+     * Conversion.
      */
     public XmlSerializablePersonList(UniquePersonList persons) {
         this(persons.asObservableList());
