@@ -1,4 +1,3 @@
-//@@author HanYaodong
 package seedu.address.storage;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
+//@@author HanYaodong
 /**
  * An Immutable Person List that is serializable to xml file.
  */
