@@ -385,8 +385,7 @@ After a `SearchCommand` is returned to the `LogicManager`, it will be executed. 
 
 The sort mechanism is similar to that of list command. The sort mechanism is to sort and list the person(s) in the addressbook according to the attribute enetered by the user.
 
-// need to add
-image::SearchCommandSequenceDiagram.png[width="800"]
+image::SortPersonSdForLogic.png[width="800"]
 _Figure 3.3.1 : Sequence Diagram of the Sort Command_
 
 When the `sort` command is being entered, followed by a non-empty keyphrase, `AddressBookParser` in `LogicManager` will return a `SortCommandParser`, which will parse the keyphrase. The keyphrase will have trailing and preceding white spaces removed, and be ensured that it is not empty String. The parser will return a `SortCommand` object.
