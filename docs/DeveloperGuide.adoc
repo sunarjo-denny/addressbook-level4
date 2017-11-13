@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Address Book Pro - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PersonProfile` `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -380,6 +380,38 @@ After a `SearchCommand` is returned to the `LogicManager`, it will be executed. 
 **Cons:** Internal attributes are of different types and it might be more cumbersome to manipulate the data type.
 // end::search[]
 
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism is similar to that of list command. The sort mechanism is to sort and list the person(s) in the addressbook according to the attribute enetered by the user.
+
+image::SortPersonSdForLogic.png[width="800"]
+_Figure 3.3.1 : Sequence Diagram of the Sort Command_
+
+When the `sort` command is being entered, followed by a non-empty keyphrase, `AddressBookParser` in `LogicManager` will return a `SortCommandParser`, which will parse the keyphrase. The keyphrase will have trailing and preceding white spaces removed, and be ensured that it is not empty String. The parser will return a `SortCommand` object.
+
+After a `SortCommand` is returned to the `LogicManager`, it will be executed. The method will call `sortComparatorByPrefix` method, which will sort the Persons in ascending or descending order depending on the attribute entered, and update the model accordingly. A successful command message will be returned if there are no errors thrown and the UI will be updated accordingly.
+
+==== Design Considerations
+
+**Aspect:** Attribute +
+**Alternative 1:** Can only sort by name +
+**Pros:** Users can sort in alphabetical order (A-Z or Z-A) +
+**Cons:** Sorted command is still not able to sort a filtered list. Instead it will list all contacts +
+**Alternative 2:** Allow filtered sort +
+**Pros:** User can sort the Persons in the Address Book after they filter them through search +
+
+---
+
+**Aspect:** Order +
+**Alternative 1:** use comparator `sortComparatorByPrefix`  to sort +
+**Pros:** User can sort the address book both ascending and descending order +
+**Cons:** Not able to stable sort +
+**Alternative 2:** Input more than one attribute for sorting +
+**Pros:** Sort according to the first attribute and when encounter same value of the first attribute, will the sort person according to second attribute +
+**Cons:** Unable to know the optimum number of attribute to stable sort the Persons in the AddressBook.
+// end::sort[]
+
 // tag::exportimport[]
 === Export/Import mechanism
 
@@ -420,6 +452,7 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 **Cons:** Cannot tell the `DuplicatedPersonException` is caused by persons in file or in address book +
 // end::exportimport[]
 
+// tag::login[]
 === User Login
 
 We are currently using a simple authenticating method to validate users. In summary, the user's username and password would be compared to the username and password stored in a file called `credentials.json`. More precisely, the password is stored as a hash value, using Java's `String#hashCode()` method to prevent the password from being openly stored.
@@ -428,11 +461,16 @@ Before the user is logged in, the user would not be able to execute any commands
 
 *Mechanism*
 
+image::LoginCommandSequenceDiagram.png[width="800"]
+_Figure 3.5.1 : Sequence Diagram of the Login Command_
+
 A `LoginCommandParser` parses a user's username and password, and returns a `LoginCommand`. The username and password entered by the user would be encapsulated in a class `UserCreds`, which is a private attribute in the `LoginCommand`. When the `execute` method is called, the `UserCreds` attribute in the `LoginCommand` would be compared against the `UserCreds` in the model. The model gets `UserCreds` attribute by reading the JSON file `credentials.json`.
 
-Upon successful authentication, the attribute `isValidated` in the model's `UserCreds` would be flagged to true. This change of attribute in `UserCreds` would be raised as an event called `indicateUserCredsChanged`. In version V1.4, this event would be transmitted using Google's Event Bus to the UiManager, which will have a handler to make the necessary adjustments to the UI in response to the event.
+Upon successful authentication, the attribute `isValidated` in the model's `UserCreds` would be flagged to true. This change of attribute in `UserCreds` would be raised as an event called `indicateUserCredsChanged`. In version V1.5, this event would be transmitted using Google's Event Bus to the UiManager, which will have a handler to make the necessary adjustments to the UI in response to the event.
 
-Once the user is logged in, every `Command` will check if the current user is validated using `model#getUserCreds()#isValidatedSession()`. If the result is true, the `Command` will be executed. Otherwise, a `CommandException` will be thrown.
+Before a `Command` is executed, the `LogicManager` check if the current user is validated using `model#getUserCreds()#isValidatedSession()`. Only `helpCommand`, `exitCommand`, and of course `loginCommand` will be executed when a user is currently not logged in. Otherwise, a `CommandException` will be thrown.
+
+In version 2.0, Address Book Pro should adopt an external security framework such as Apache Shiro to ensure more secure authentications.
 
 ==== Design Consideration
 
@@ -445,11 +483,12 @@ Once the user is logged in, every `Command` will check if the current user is va
 ---
 
 **Aspect** Changes to the GUI +
-**Alternative 1 (current choice):** Allows users to view addressbook as it automatically loads. +
-**Alternative 2:** Hides all panels except for CommandBox and ResultDisplay. Reveal other panels (e.g. PersonList) once user is logged in. +
+**Alternative 1:** Allows users to view addressbook as it automatically loads. +
+**Alternative 2 (current choice):** Hides all panels except for CommandBox and ResultDisplay. Reveal other panels (e.g. PersonList) once user is logged in. +
 **Alternative 3:** Show all panles, but only load addressbook once user is logged in. +
-**Pros:** No changes needed for GUI +
-**Cons:** Unauthorized users are still able to view the contact list, which may not be desirable
+**Pros:** Unauthorized users are unable to view contact list prior to login +
+**Cons:** Login mechanism is coupled with existing UI of the address book; Future changes to UI may affect the login mechanism.
+// end::login[]
 
 // tag::facebookProfilePicture[]
 === Contact Profile Picture
@@ -458,18 +497,20 @@ We are using `facebook4j` package as a wrapper to access Facebook's Graph API. T
 
 This class is used only in `PersonProfile` class, where there is a need to retrieve a contact's profile picture from Facebook to use as a contact profile picture. The method `facebook#getPictureURL(String userId, PictureSize size)` is used to retrieve a larger image from Facebook.
 
-[Note] The application is currently authorized with an application token that will expire in 2 months.
+[NOTE] The application is currently authorized with an application token that will expire in 2 months. +
+[NOTE] In V2.0, Address Book Pro should introduce Facebook user login and allow users to authenticate the application instead of storing application tokens.
 
 In the event that an image cannot be retrieved from Facebook, a default image stored locally would be used as the contact's profile picture.
 
-**Aspect** Retrieving a user's Facebook profile picture +
+**Aspect:** Retrieving a user's Facebook profile picture +
 **Alternative 1 (temporary fix)**: Hard code a Facebook userId, which will be used to retrieve a profile picture from the user. +
 **Alternative 2**: Figure out how to retrieve userId from a Facebook user's username or url. +
 **Alternative 3**: Introduce another 3rd party library that returns a userId from a username +
-**Pros**: Able to quickly prototype with the temporary fix +
-**Cons**: The profile picture does not match the actual contact
+**Alternative 4 (Current Solution)**: Get users to store their Facebook Id directly for immediate usage +
+**Pros**: A simple fix to easily retrieve a contact's profile picture +
+**Cons**: Facebook IDs are not usually remembered by users and may require more effort to retrieve.
 
-**Aspect** Facebook Authentication +
+**Aspect:** Facebook Authentication +
 **Alternative 1 (current choice)**: Create a Facebook application and store the app id, app secret and token in the `PersonProfile` class. +
 **Alternative 2**: Get users to log in with their own Facebook accounts and grant permission +
 **Pros**: Hassle free for users +
@@ -752,7 +793,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-//tag::remark[]
+// tag::remark[]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
@@ -870,7 +911,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 ==== Full Solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-//tag::remark[]
+// end::undoredo[]
 
 [appendix]
 == User Stories
@@ -1226,6 +1267,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[facebook-Id]]
+Facebook Id
+
+....
+A unique integer assigned by Facebook to identify users
+....
+
+[[user-credentials]]
+User Credentials
+
+....
+The username and password of the current user, which will be used for authentication
 ....
 
 [appendix]

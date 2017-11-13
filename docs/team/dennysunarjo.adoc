@@ -6,16 +6,16 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/sunarjo-denny.md[Functional code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/sunarjo-denny-reused.md[Reused code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/test/sunarjo-denny.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Sort
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
 #End of Extract#
 
@@ -23,28 +23,38 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+It is one of the basic necessity of most tools to be able to sort their values according to the attribute the user are interested in.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Birthday Attribute
 
-{Explain similar to the Undo/Redo feature above.}
+==== Justification
+
+As our main targeted user consist of millenials, storing birthday (for celebration purposes) is just as important as storing address.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Add command aliases (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/11[#11])
+* Update AddressBook Pro UI to a cleaner and more modern look (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/45[#45], https://github.com/CS2103AUG2017-F11-B4/main/pull/61[#61])
+* Update Model Class Diagram (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/71[#71])

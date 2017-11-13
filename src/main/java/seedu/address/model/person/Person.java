@@ -137,6 +137,7 @@ public class Person implements ReadOnlyPerson {
         return facebook.get();
     }
 
+    //@@author zenghou
     @Override
     public void setRemark(Remark remark) {
         this.remark.set(remark);
@@ -151,6 +152,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Remark> remarkProperty() {
         return remark;
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

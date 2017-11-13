@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -36,7 +37,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_BIRTHDAY, PREFIX_FACEBOOK, PREFIX_TAG);
+                        PREFIX_REMARK, PREFIX_BIRTHDAY, PREFIX_FACEBOOK, PREFIX_TAG);
 
         Index index;
 
@@ -52,6 +53,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
+            ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
             ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
                     .ifPresent(editPersonDescriptor::setBirthday);
             ParserUtil.parseFacebook(argMultimap.getValue(PREFIX_FACEBOOK))

@@ -24,6 +24,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -144,7 +145,7 @@ public class AutoCompleteTest {
     public void autoCompleteEdit_firstIndexInvalidField_autoFillFields() {
         ReadOnlyPerson firstPerson = getTypicalPersons().get(INDEX_FIRST_PERSON.getZeroBased());
         String expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(firstPerson).trim();
+            + " " + getPersonDetails(firstPerson).trim() + " ";
 
         // empty field
         String command = "edit 1 n/";
@@ -168,7 +169,7 @@ public class AutoCompleteTest {
         Person expectedPerson = new Person(firstPerson);
         expectedPerson.setName(new Name(validName));
         String expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(expectedPerson).trim();
+            + " " + getPersonDetails(expectedPerson).trim() + " ";
         assertAutoComplete(command, expected);
 
         String validPhone = "1234567";
@@ -176,7 +177,7 @@ public class AutoCompleteTest {
         expectedPerson = new Person(firstPerson);
         expectedPerson.setPhone(new Phone(validPhone));
         expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(expectedPerson).trim();
+            + " " + getPersonDetails(expectedPerson).trim() + " ";
         assertAutoComplete(command, expected);
 
         // index out of boundary -> leave the args
@@ -278,11 +279,14 @@ public class AutoCompleteTest {
 
     @Test
     public void autoCompleteRemark_firstIndexEmptyField_autoFillRemarkField() {
+        List<ReadOnlyPerson> personList = new ArrayList<>();
+        personList.add(new Person(getTypicalPersons().get(0)));
+
         String validRemark = "valid remark";
         String command = "remark 1 r/";
-        getTypicalPersons().get(INDEX_FIRST_PERSON.getZeroBased()).setRemark(new Remark(validRemark));
+        personList.get(INDEX_FIRST_PERSON.getZeroBased()).setRemark(new Remark(validRemark));
         String expected = command + validRemark;
-        assertAutoComplete(command, expected);
+        assertAutoComplete(command, expected, personList);
     }
 
     @Test
@@ -392,6 +396,14 @@ public class AutoCompleteTest {
      */
     private void assertAutoComplete(String command, String expectedResult) {
         String result = AutoComplete.autoComplete(command, getTypicalPersons());
+        assertEquals(result, expectedResult);
+    }
+
+    /**
+     * @see #assertAutoComplete(String, String).
+     */
+    private void assertAutoComplete(String command, String expectedResult, List<ReadOnlyPerson> personList) {
+        String result = AutoComplete.autoComplete(command, personList);
         assertEquals(result, expectedResult);
     }
 

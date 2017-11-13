@@ -137,7 +137,7 @@ public class MainWindow extends UiPart<Region> {
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
     }
 
-    //@@author zenghou-unused
+    //@@author zenghou
     /**
      * Fills up all the commandbox placeholder of this window.
      */

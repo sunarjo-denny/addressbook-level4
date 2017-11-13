@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>1990/10/20</birthday>
+        <facebook>4</facebook>
+        <remark>Likes dragon fruit</remark>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>1890/03/20</birthday>
+        <facebook>153080620724</facebook>
+        <remark>Likes music</remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>1999/01/01</birthday>
+        <facebook>771663635</facebook>
+        <remark>Likes apple juice</remark>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>2000/01/31</birthday>
+        <facebook>4</facebook>
+        <remark>Likes coffee</remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>2001/07/07</birthday>
+        <facebook>6</facebook>
+        <remark>Likes milk tea</remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Zeng Hou</name>
+        <phone>12345678</phone>
+        <email>zenghou@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>James</name>
+        <phone>123</phone>
+        <email>james@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Peter</name>
+        <phone>12345678</phone>
+        <email>peter@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Leon</name>
+        <phone>12345678</phone>
+        <email>leon@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Lebrone</name>
+        <phone>12345678</phone>
+        <email>lebrone@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Nelson</name>
+        <phone>12345678</phone>
+        <email>nelson@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>damith</name>
+        <phone>12345678</phone>
+        <email>damithicalman@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Jordan Tip</name>
+        <phone>12345678</phone>
+        <email>jordantip@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Hubert Chan</name>
+        <phone>12345678</phone>
+        <email>hubertchan@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good boi</remark>
+    </persons>
+    <persons>
+        <name>Leroy Sane</name>
+        <phone>12345678</phone>
+        <email>leroysane@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is a good footballer</remark>
+    </persons>
+    <persons>
+        <name>Sergio Aguero</name>
+        <phone>12345678</phone>
+        <email>sergiooo@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent footballer</remark>
+    </persons>
+    <persons>
+        <name>Petersberg</name>
+        <phone>12345678</phone>
+        <email>petersberg@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent footballer</remark>
+    </persons>
+    <persons>
+        <name>Pep Guardiola</name>
+        <phone>12345678</phone>
+        <email>peppyboi@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent manager</remark>
+    </persons>
+    <persons>
+        <name>John Stones</name>
+        <phone>12345678</phone>
+        <email>imarock@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent central defender</remark>
+    </persons>
+    <persons>
+        <name>Fabian Delph</name>
+        <phone>12345678</phone>
+        <email>makeshiftlb@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent left back</remark>
+    </persons>
+    <persons>
+        <name>David Silva</name>
+        <phone>12345678</phone>
+        <email>ds21@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is an excellent controller</remark>
+    </persons>
+    <persons>
+        <name>Kevin De Bruyne</name>
+        <phone>12345678</phone>
+        <email>kdb17@example.com</email>
+        <address>National University of Singapore</address>
+        <birthday>1994/11/10</birthday>
+        <facebook>4</facebook>
+        <remark>is in excellent form and has sick passes</remark>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>friends</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>classmates</tags>
+</addressbook>

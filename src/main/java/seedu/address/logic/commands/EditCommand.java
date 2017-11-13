@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -26,6 +27,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -48,6 +50,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
             + "[" + PREFIX_FACEBOOK + "FACEBOOK] "
+            + "[" + PREFIX_REMARK + "REMARK] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -106,12 +109,17 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Facebook updatedFacebook = editPersonDescriptor.getFacebook().orElse(personToEdit.getFacebook());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday,
+        Person person = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday,
             updatedFacebook, updatedTags);
+
+        person.setRemark(updatedRemark);
+
+        return person;
     }
 
     @Override
@@ -141,6 +149,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Remark remark;
         private Birthday birthday;
         private Facebook facebook;
         private Set<Tag> tags;
@@ -152,6 +161,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.remark = toCopy.remark;
             this.birthday = toCopy.birthday;
             this.facebook = toCopy.facebook;
             this.tags = toCopy.tags;
@@ -162,7 +172,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.birthday,
-                    this.facebook, this.tags);
+                    this.remark, this.facebook, this.tags);
         }
 
         public void setName(Name name) {
@@ -196,6 +206,16 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
+
+        //@@author zenghou
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+        //@@author
 
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -241,6 +261,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getBirthday().equals(e.getBirthday())
+                    && getRemark().equals(e.getRemark())
                     && getFacebook().equals(e.getFacebook())
                     && getTags().equals(e.getTags());
         }
