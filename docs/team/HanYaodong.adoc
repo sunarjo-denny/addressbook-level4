@@ -32,7 +32,7 @@ Currently, the export command can accept a list of indexes to refer to the perso
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../UserGuide.adoc[tag=exportimport]
+include::../DeveloperGuide.adoc[tag=exportimport]
 
 #End of Extract#
 
@@ -60,7 +60,7 @@ Command can be complicated for a CLT system while more and more functions are in
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../UserGuide.adoc[tag=autocomplete]
+include::../DeveloperGuide.adoc[tag=autocomplete]
 
 #End of Extract#
 
