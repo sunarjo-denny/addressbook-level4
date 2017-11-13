@@ -142,6 +142,30 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::remark[]
+=== Adding a remark : `remark`
+
+Adds a remark to a specified person from the address book. +
+Format: `remark INDEX [r/REMARK]` +
+Shorthand for delete: `r`
+
+****
+* Adds a remark to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`remark 2 r/Likes to drink coffee and has a good sense of humor` +
+Adds the remark "Likes to drink coffee and has a good sense of humor" +
+to the 2nd person in the address book.
+
+Since v1.1.
+
+// end::remark[]
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -379,30 +403,6 @@ There is no need to save manually.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-// tag::remark[]
-=== Adding a remark : `remark`
-
-Adds a remark to a specified person from the address book. +
-Format: `remark INDEX [r/REMARK]` +
-Shorthand for delete: `r`
-
-****
-* Adds a remark to the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`remark 2 r/Likes to drink coffee and has a good sense of humor` +
-Adds the remark "Likes to drink coffee and has a good sense of humor" +
-to the 2nd person in the address book.
-
-Since v1.1.
-
-// end::remark[]
 
 == Command Summary
 

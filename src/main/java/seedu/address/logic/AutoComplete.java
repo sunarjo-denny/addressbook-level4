@@ -1,4 +1,3 @@
-//@@author HanYaodong
 package seedu.address.logic;
 
 import static java.util.Objects.requireNonNull;
@@ -53,6 +52,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author HanYaodong
 /**
  * Utilities for auto completion for command.
  */
