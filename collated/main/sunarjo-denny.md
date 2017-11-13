@@ -1,5 +1,5 @@
 # sunarjo-denny
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -80,91 +80,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
-    public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
-        switch (commandWord) {
-
-        case LoginCommand.COMMAND_WORD:
-            return new LoginCommandParser().parse(arguments);
-
-        case AddCommand.COMMAND_WORD:
-        case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD:
-        case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
-        case DeleteCommand.COMMAND_WORD:
-        case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
-
-        case RemarkCommand.COMMAND_WORD:
-        case RemarkCommand.COMMAND_ALIAS:
-            return new RemarkCommandParser().parse(arguments);
-
-        case ClearCommand.COMMAND_WORD:
-        case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
-
-        case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(arguments);
-
-        case ExportCommand.COMMAND_WORD:
-            return new ExportCommandParser().parse(arguments);
-
-        case ImportCommand.COMMAND_WORD:
-            return new ImportCommandParser().parse(arguments);
-
-        case SearchCommand.COMMAND_WORD:
-        case SearchCommand.COMMAND_ALIAS:
-            return new SearchCommandParser().parse(arguments);
-
-        case HistoryCommand.COMMAND_WORD:
-            return new HistoryCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\SortCommandParser.java
+###### /java/seedu/address/logic/parser/SortCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -211,7 +127,7 @@ public class SortCommandParser implements Parser<SortCommand> {
          * Invalid command arguments would result in a loaded preamble
          */
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 package seedu.address.model.person;
 
@@ -263,7 +179,7 @@ public class Birthday {
     }
 
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 
     @Override
@@ -284,7 +200,7 @@ public class Birthday {
     }
 }
 ```
-###### \resources\view\LightTheme.css
+###### /resources/view/LightTheme.css
 ``` css
 .label {
     -fx-font-size: 11pt;
@@ -682,7 +598,7 @@ public class Birthday {
     -fx-border-style: solid;
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
@@ -734,7 +650,7 @@ public class Birthday {
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">

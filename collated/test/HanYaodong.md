@@ -100,7 +100,7 @@ public class AutoCompleteTest {
     public void autoCompleteEdit_firstIndexInvalidField_autoFillFields() {
         ReadOnlyPerson firstPerson = getTypicalPersons().get(INDEX_FIRST_PERSON.getZeroBased());
         String expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(firstPerson).trim();
+            + " " + getPersonDetails(firstPerson).trim() + " ";
 
         // empty field
         String command = "edit 1 n/";
@@ -124,7 +124,7 @@ public class AutoCompleteTest {
         Person expectedPerson = new Person(firstPerson);
         expectedPerson.setName(new Name(validName));
         String expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(expectedPerson).trim();
+            + " " + getPersonDetails(expectedPerson).trim() + " ";
         assertAutoComplete(command, expected);
 
         String validPhone = "1234567";
@@ -132,7 +132,7 @@ public class AutoCompleteTest {
         expectedPerson = new Person(firstPerson);
         expectedPerson.setPhone(new Phone(validPhone));
         expected = EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-            + " " + getPersonDetails(expectedPerson).trim();
+            + " " + getPersonDetails(expectedPerson).trim() + " ";
         assertAutoComplete(command, expected);
 
         // index out of boundary -> leave the args
@@ -234,11 +234,14 @@ public class AutoCompleteTest {
 
     @Test
     public void autoCompleteRemark_firstIndexEmptyField_autoFillRemarkField() {
+        List<ReadOnlyPerson> personList = new ArrayList<>();
+        personList.add(new Person(getTypicalPersons().get(0)));
+
         String validRemark = "valid remark";
         String command = "remark 1 r/";
-        getTypicalPersons().get(INDEX_FIRST_PERSON.getZeroBased()).setRemark(new Remark(validRemark));
+        personList.get(INDEX_FIRST_PERSON.getZeroBased()).setRemark(new Remark(validRemark));
         String expected = command + validRemark;
-        assertAutoComplete(command, expected);
+        assertAutoComplete(command, expected, personList);
     }
 
     @Test
@@ -262,16 +265,16 @@ public class AutoCompleteTest {
 
     @Test
     public void autoCompleteSort_containMultiplePrefix_onlyReturnName() {
-        String command = "sort n/p/  ";
-        String expected = "sort n/";
+        String command = "sort name phone  ";
+        String expected = "sort name";
         assertAutoComplete(command, expected);
 
-        command = "sort reverse p/ ";
-        expected = "sort p/ reverse";
+        command = "sort reverse phone ";
+        expected = "sort phone reverse";
         assertAutoComplete(command, expected);
 
-        command = "sort n/ reverse p/ ";
-        expected = "sort n/ reverse";
+        command = "sort name reverse phone ";
+        expected = "sort name reverse";
         assertAutoComplete(command, expected);
     }
 
@@ -352,6 +355,14 @@ public class AutoCompleteTest {
     }
 
     /**
+     * @see #assertAutoComplete(String, String).
+     */
+    private void assertAutoComplete(String command, String expectedResult, List<ReadOnlyPerson> personList) {
+        String result = AutoComplete.autoComplete(command, personList);
+        assertEquals(result, expectedResult);
+    }
+
+    /**
      * Returns the prompt String for suggestions.
      */
     private String getUnknownCommandPrompt(String... suggestions) {
@@ -376,6 +387,131 @@ public class ExportCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
 
 ```
+###### /java/seedu/address/logic/commands/ExportCommandTest.java
+``` java
+
+    @Test
+    public void equals() {
+        List<Index> indexes = Arrays.asList(Index.fromOneBased(1), Index.fromOneBased(2));
+        String filePath = "TestFile.xml";
+        ExportCommand exportCommand = new ExportCommand(indexes, filePath);
+
+        // same object -> true
+        assertTrue(exportCommand.equals(exportCommand));
+
+        // same value -> true
+        ExportCommand exportCommandCopy = new ExportCommand(indexes, filePath);
+        assertTrue(exportCommand.equals(exportCommandCopy));
+
+        // different type -> false
+        assertFalse(exportCommand.equals(1));
+
+        // null -> false
+        assertFalse(exportCommand.equals(null));
+
+        // different index -> false
+        List<Index> newIndexes = Collections.singletonList(Index.fromOneBased(1));
+        ExportCommand exportCommandDifferentIndex = new ExportCommand(newIndexes, filePath);
+        assertFalse(exportCommand.equals(exportCommandDifferentIndex));
+
+        //different filePath -> false
+        ExportCommand exportCommandDifferentFilePath = new ExportCommand(indexes, "OtherFile.xml");
+        assertFalse(exportCommand.equals(exportCommandDifferentFilePath));
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        int outOfBoundaryOneBasedIndex = this.model.getFilteredPersonList().size() + 1;
+        ExportCommand command = prepareCommand(new Integer[]{outOfBoundaryOneBasedIndex}, getTestFilePath());
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        CommandResult result = command.execute();
+
+    }
+
+    @Test
+    public void execute_validIndexesAndFilePath_success() throws Exception {
+        // export typical person: Alice, Benson, Daniel
+        ExportCommand command = prepareCommand(new Integer[]{1, 2, 4}, getTestFilePath());
+
+        // test command output
+        CommandResult commandResult = command.execute();
+        assertEquals(commandResult.feedbackToUser, String.format(
+            ExportCommand.MESSAGE_EXPORT_PERSON_SUCCESS, constructNameList(ALICE, BENSON, DANIEL), getTestFilePath()));
+
+        // test file output
+        UniquePersonList origin = new UniquePersonList();
+        origin.setPersons(Arrays.asList(ALICE, BENSON, DANIEL));
+        XmlPersonListStorage tmpStorage = new XmlPersonListStorage(getTestFilePath());
+        UniquePersonList readBack = tmpStorage.readPersonList().get();
+        assertEquals(readBack, origin);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        prepareCommand(new Integer[]{outOfBoundIndex.getOneBased()}, getTestFilePath()).execute();
+    }
+
+    @Test
+    public void execute_validIndexesAndFilePathFilteredList_success() throws Exception {
+        showFirstPersonOnly(this.model);
+        // export typical person: Alice
+        ExportCommand command = prepareCommand(new Integer[]{1}, getTestFilePath());
+
+        // test command output
+        CommandResult commandResult = command.execute();
+        assertEquals(commandResult.feedbackToUser, String.format(
+            ExportCommand.MESSAGE_EXPORT_PERSON_SUCCESS, constructNameList(ALICE), getTestFilePath()));
+
+        // test file output
+        UniquePersonList origin = new UniquePersonList();
+        origin.setPersons(Arrays.asList(ALICE));
+        XmlPersonListStorage tmpStorage = new XmlPersonListStorage(getTestFilePath());
+        UniquePersonList readBack = tmpStorage.readPersonList().get();
+        assertEquals(readBack, origin);
+    }
+
+    /**
+     * @return an {@code ExportCommand} with parameters {@code indexes} and {@code filePath}
+     */
+    private ExportCommand prepareCommand(Integer[] indexesInt, String filePath) {
+        model.getUserCreds().validateCurrentSession(); // validate user
+        List<Index> indexes = Arrays.stream(indexesInt).map(Index::fromOneBased).collect(Collectors.toList());
+        ExportCommand export = new ExportCommand(indexes, filePath);
+        export.setData(this.model, new CommandHistory(), new UndoRedoStack());
+        return export;
+    }
+
+    /**
+     * Builds a String consisting of {@code persons}'s name in the format of
+     * "[person_1's name], [person_2's name], ..., [person_n's name] "
+     */
+    private String constructNameList(ReadOnlyPerson... persons) {
+        StringBuilder personNameList = new StringBuilder();
+        for (ReadOnlyPerson person : persons) {
+            personNameList.append(person.getName().fullName).append(", ");
+        }
+        personNameList.deleteCharAt(personNameList.lastIndexOf(","));
+        return personNameList.toString();
+    }
+
+    /**
+     * @return a valid file path for testing.
+     */
+    private String getTestFilePath() {
+        return testFolder.getRoot().getPath() + "TempPersonList.xml";
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/ImportCommandTest.java
 ``` java
 public class ImportCommandTest {
@@ -394,6 +530,123 @@ public class ImportCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
 
+```
+###### /java/seedu/address/logic/commands/ImportCommandTest.java
+``` java
+
+    @Test
+    public void equals() {
+        String filePath = "SomeFile.xml";
+        ImportCommand importCommand = new ImportCommand(filePath);
+
+        // the same object -> true
+        assertTrue(importCommand.equals(importCommand));
+
+        // different object same value -> true
+        assertTrue(importCommand.equals(new ImportCommand(filePath)));
+
+        // null -> false
+        assertFalse(importCommand.equals(null));
+
+        // different classes -> false
+        assertFalse(importCommand.equals(1));
+
+        // different values -> false
+        assertFalse(importCommand.equals(new ImportCommand("OtherFile.xml")));
+    }
+
+    @Test
+    public void constructor_nullFilePath_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        new ImportCommand(null).executeUndoableCommand();
+    }
+
+    @Test
+    public void execute_missingFile_failure() throws Exception {
+        String filePath = addToTestDataPathIfNotNull("MissingFile.xml");
+        assertCommandException(new ImportCommand(filePath),
+            String.format(ImportCommand.MESSAGE_MISSING_FILE, filePath));
+    }
+
+    @Test
+    public void execute_notXmlFormat_failure() throws Exception {
+        String filePath = addToTestDataPathIfNotNull("NotXmlFormatExportFile.xml");
+        assertCommandException(new ImportCommand(filePath),
+            String.format(ImportCommand.MESSAGE_INVALID_XML_FILE, filePath));
+    }
+
+    @Test
+    public void execute_emptyFile_failure() {
+        String filePath = addToTestDataPathIfNotNull("EmptyFile.xml");
+        //TODO: empty file should return Optional.empty()?
+        assertCommandException(new ImportCommand(filePath),
+            String.format(ImportCommand.MESSAGE_INVALID_XML_FILE, filePath));
+    }
+
+    @Test
+    public void execute_duplicatedPersonInFile_failure() throws Exception {
+        String filePath = addToTestDataPathIfNotNull("DuplicatedPersonsExportFile.xml");
+        assertCommandException(new ImportCommand(filePath),
+            String.format(ImportCommand.MESSAGE_DUPLICATED_PERSON_IN_FILE, filePath));
+    }
+
+    @Test
+    public void execute_duplicatedPersonInAddressBook_successWithWarning() throws Exception {
+        String filePath = addToTestDataPathIfNotNull("DuplicatedPersonInAddressBook.xml");
+        ImportCommand command = prepareCommand(filePath);
+        CommandResult result = command.executeUndoableCommand();
+        assertEquals(result.feedbackToUser, String.format(MESSAGE_SUCCESS_WITH_DUPLICATED_PERSON_IN_FILE, 1));
+    }
+
+    @Test
+    public void execute_validFilePathAndFile_success() throws Exception {
+        String filePath = addToTestDataPathIfNotNull("ImportTestFile.xml");
+        ImportCommand command = prepareCommand(filePath);
+        CommandResult result = command.execute();
+
+        // check CommandResult
+        assertEquals(result.feedbackToUser, String.format(ImportCommand.MESSAGE_IMPORT_SUCCESS, 1));
+        // check Model
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
+        expectedModel.getUserCreds().validateCurrentSession(); // validate user
+        expectedModel.addPerson(TypicalPersons.HOON);
+        assertEquals(command.model, expectedModel);
+    }
+
+    /**
+     * @return an ImportCommand with given {@code filePath} and typical Model.
+     */
+    private ImportCommand prepareCommand(String filePath) {
+        ImportCommand command = new ImportCommand(filePath);
+        // typical address model consists of ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE
+        Model typicalAddressBookModel = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
+        typicalAddressBookModel.getUserCreds().validateCurrentSession(); // validate user
+        command.setData(typicalAddressBookModel, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts if executing the given command throws {@code CommandException} with {@code exceptionMessage}.
+     */
+    private void assertCommandException(ImportCommand command, String exceptionMessage) {
+        model.getUserCreds().validateCurrentSession(); // validate user
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        try {
+            command.executeUndoableCommand();
+        } catch (CommandException ce) {
+            assertEquals(ce.getMessage(), exceptionMessage);
+        }
+    }
+
+    /**
+     * Adds test folder path to {@code prefsFileInTestDataFolder}.
+     */
+    private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
+        return prefsFileInTestDataFolder != null
+               ? TEST_DATA_FOLDER + prefsFileInTestDataFolder
+               : null;
+    }
+}
 ```
 ###### /java/seedu/address/logic/parser/ExportCommandParserTest.java
 ``` java

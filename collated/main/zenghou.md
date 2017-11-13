@@ -419,7 +419,7 @@ public class Remark {
     }
 
     /**
-     * Returns an empty Birthday object.
+     * Returns an empty Remark object.
      */
     public static Remark getEmptyRemark() {
         return new Remark("");
