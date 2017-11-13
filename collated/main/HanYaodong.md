@@ -28,58 +28,6 @@
 ```
 ###### /java/seedu/address/logic/AutoComplete.java
 ``` java
-package seedu.address.logic;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.StringUtil.getSystemCommandWords;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME_STRING;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.logic.parser.Prefix;
-import seedu.address.model.person.ReadOnlyPerson;
-
 /**
  * Utilities for auto completion for command.
  */
@@ -166,7 +114,7 @@ public class AutoComplete {
      */
     private static String editCommandAutoComplete(String args, List<ReadOnlyPerson> filteredPersonList) {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
-            PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_BIRTHDAY, PREFIX_FACEBOOK, PREFIX_TAG);
+            PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_BIRTHDAY, PREFIX_FACEBOOK, PREFIX_TAG);
 
         String indexString = argMultimap.getPreamble();
         Index index;
@@ -186,9 +134,10 @@ public class AutoComplete {
                 + formatPrefixWithArgs(argMultimap, PREFIX_PHONE, person) + " "
                 + formatPrefixWithArgs(argMultimap, PREFIX_EMAIL, person) + " "
                 + formatPrefixWithArgs(argMultimap, PREFIX_ADDRESS, person) + " "
+                + formatPrefixWithArgs(argMultimap, PREFIX_REMARK, person) + " "
                 + formatPrefixWithArgs(argMultimap, PREFIX_BIRTHDAY, person) + " "
                 + formatPrefixWithArgs(argMultimap, PREFIX_FACEBOOK, person) + " "
-                + formatPrefixWithArgs(argMultimap, PREFIX_TAG, person);
+                + formatPrefixWithArgs(argMultimap, PREFIX_TAG, person) + " ";
         } catch (IndexOutOfBoundsException e) {
             String restArgs = args.replaceFirst(indexString, "").trim();
             return EditCommand.COMMAND_WORD + " " + formatSingleIndexString(indexString) + " " + restArgs;
@@ -286,10 +235,10 @@ public class AutoComplete {
      */
     private static String sortCommandAutoComplete(String args) {
         StringBuilder formattedArg = new StringBuilder();
-        if (args.contains(PREFIX_NAME_STRING)) {
-            formattedArg.append(PREFIX_NAME_STRING);
-        } else if (args.contains(PREFIX_PHONE_STRING)) {
-            formattedArg.append(PREFIX_PHONE_STRING);
+        if (args.contains(PREFIX_NAME_FOR_SORTING.getPrefix())) {
+            formattedArg.append(PREFIX_NAME_FOR_SORTING.getPrefix());
+        } else if (args.contains(PREFIX_PHONE_FOR_SORTING.getPrefix())) {
+            formattedArg.append(PREFIX_PHONE_FOR_SORTING.getPrefix());
         }
         if (args.contains("reverse")) {
             formattedArg.append(" ").append("reverse");
@@ -1073,20 +1022,6 @@ public class XmlPersonListStorage implements PersonListStorage {
 ```
 ###### /java/seedu/address/storage/XmlSerializablePersonList.java
 ``` java
-package seedu.address.storage;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-
 /**
  * An Immutable Person List that is serializable to xml file.
  */
@@ -1105,7 +1040,7 @@ public class XmlSerializablePersonList extends XmlSerializableData {
     }
 
     /**
-     * Conversion
+     * Conversion.
      */
     public XmlSerializablePersonList(List<ReadOnlyPerson> persons) {
         this();
@@ -1113,7 +1048,7 @@ public class XmlSerializablePersonList extends XmlSerializableData {
     }
 
     /**
-     * Conversion
+     * Conversion.
      */
     public XmlSerializablePersonList(UniquePersonList persons) {
         this(persons.asObservableList());

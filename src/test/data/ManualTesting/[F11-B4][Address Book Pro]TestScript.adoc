@@ -1,0 +1,116 @@
+= Manual Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+This document is for manual testing Address Book Pro.
+
+== Prerequisites
+
+*JDK `1.8.0_60`* or later
+
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
+
+== Set Up Test Environment
+
+Before testing, you need to set up the test folder and load sample data.
+
+. Create a folder called `ManualTesting`, and inside the test folder, create another folder called `data`.
+
+. Copy AddressBookPro.jar to `ManualTesting`.
+
+. Find `[F11-B4][AddressBook Pro]SampleData.xmlSampleData.xml` in `src/test/data/ManualTesting`. Copy it to `ManualTesting/data` and rename it to `addressbook.xml`.
+
+. Open a terminal and navigate to the test folder. Run command `java -jar AddressBookPro.jar`. The Address Book Pro should be running with sample data.
+
+== Run Test Scripts
+
+To run a command, enter the command into the command box and hit "Enter" key. You can compare the result and Expected Result.
+
+[NOTE]
+Please run commands in the given sequence in this document. +
+Changing the order of commands can lead to different result.
+
+=== Login
+
+* Command `login usr/admin pwd/password`. Expected Result: Successfully log into the system. Person card list should be shown on the left.
+
+=== Add
+
+* Command `add n/New Person p/123456 e/email@example.com a/ b/1996/01/01 f/4 t/friend`. Expected Result: Successfully add a new contact.
+
+* Command `add n/New Person p/123456 e/email@example.com a/ b/1996/01/01 f/4 t/friend`. Expected Result: Add duplicated person; command rejected.
+
+=== Edit
+
+* Command `edit 23 a/nus`. Expected Result: Successfully add address to the newly added person.
+
+=== Remark
+
+* Command `remark 23 r/cs2103`. Expected Result: Successfully add remark "cs2103" to the newly added person.
+
+=== Select
+
+* Command `select 23`. Expected Result: Successfully select 23rd person. Profile on the right shows the details of the person.
+
+=== Delete
+
+* Command `delete 1`. Expected Result: Successfully delete the first person.
+
+=== Undo
+
+* Command `undo`. Expected Result: Successfully undo the deletion command.
+
+=== Redo
+
+* Command `redo`. Expected Result: Successfully redo the deletion command.
+
+=== Find
+
+* Command `find david`. Expected Result: Successfully list all people with "david" in their names (David Li and David Silva).
+
+=== Search
+
+* Command `search cs2103`. Expected Result: Successfully find all people with "cs2103" in any fields (New Person).
+
+=== List
+
+* Command `list`. Expected Result: Successfully list all persons in the address book (22 people).
+
+=== Sort
+
+* Command `sort name`. Expected Result:: Successfully list all persons in alphabetical order based on their names.
+
+* Command `sort phone reverse`. Expected Result:: List all persons in reverse order based on their phones.
+
+=== Export
+
+* Command `export 1-5, 6 15-22; export/persons.xml`. Expected Result: Successfully export person numbered 1-5, 6, and 15-22 to file `export/persons.xml`.
+
+=== Clear
+
+* Command `clear`. Expected Result: Successfully delete all persons from the address book.
+
+=== Import
+
+* Command `import export/persons.xml`. Expected Result: Successfully import persons from the previous export file.
+
+=== Help
+
+* Command `help`. Expected Result: Successfully show the help window with user guide.
+
+=== Exit
+
+* Command `exit`. Expected Result: Successfully exit the program.
+
+== Cleanup
+
+You can delete the test folder `ManualTesting` and all test data and records will be cleaned.

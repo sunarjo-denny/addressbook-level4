@@ -1,5 +1,5 @@
 # sunarjo-denny
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -47,7 +47,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\SortCommandParserTest.java
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -75,7 +75,7 @@ public class SortCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\BirthdayTest.java
+###### /java/seedu/address/model/person/BirthdayTest.java
 ``` java
 package seedu.address.model.person;
 
