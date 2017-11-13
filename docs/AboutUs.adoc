@@ -30,7 +30,7 @@ Responsibilities: Logic + UI
 
 === Yaodong Han
 image::hanyaodong.jpg[width="150", align="left"]
-{empty}[http://github.com/HanYaodong[github]] [<<yaodong#, portfolio>>]
+{empty}[http://github.com/HanYaodong[github]] [<<HanYaodong#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage + UI
