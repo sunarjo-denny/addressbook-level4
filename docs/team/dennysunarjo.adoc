@@ -57,3 +57,4 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 * Add command aliases (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/11[#11])
 * Update AddressBook Pro UI to a cleaner and more modern look (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/45[#45], https://github.com/CS2103AUG2017-F11-B4/main/pull/61[#61])
+* Update Model Class Diagram (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/71[#71])
