@@ -452,6 +452,7 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 **Cons:** Cannot tell the `DuplicatedPersonException` is caused by persons in file or in address book +
 // end::exportimport[]
 
+// tag::login[]
 === User Login
 
 We are currently using a simple authenticating method to validate users. In summary, the user's username and password would be compared to the username and password stored in a file called `credentials.json`. More precisely, the password is stored as a hash value, using Java's `String#hashCode()` method to prevent the password from being openly stored.
@@ -460,11 +461,16 @@ Before the user is logged in, the user would not be able to execute any commands
 
 *Mechanism*
 
+image::LoginCommandSequenceDiagram.png[width="800"]
+_Figure 3.5.1 : Sequence Diagram of the Login Command_
+
 A `LoginCommandParser` parses a user's username and password, and returns a `LoginCommand`. The username and password entered by the user would be encapsulated in a class `UserCreds`, which is a private attribute in the `LoginCommand`. When the `execute` method is called, the `UserCreds` attribute in the `LoginCommand` would be compared against the `UserCreds` in the model. The model gets `UserCreds` attribute by reading the JSON file `credentials.json`.
 
-Upon successful authentication, the attribute `isValidated` in the model's `UserCreds` would be flagged to true. This change of attribute in `UserCreds` would be raised as an event called `indicateUserCredsChanged`. In version V1.4, this event would be transmitted using Google's Event Bus to the UiManager, which will have a handler to make the necessary adjustments to the UI in response to the event.
+Upon successful authentication, the attribute `isValidated` in the model's `UserCreds` would be flagged to true. This change of attribute in `UserCreds` would be raised as an event called `indicateUserCredsChanged`. In version V1.5, this event would be transmitted using Google's Event Bus to the UiManager, which will have a handler to make the necessary adjustments to the UI in response to the event.
 
-Once the user is logged in, every `Command` will check if the current user is validated using `model#getUserCreds()#isValidatedSession()`. If the result is true, the `Command` will be executed. Otherwise, a `CommandException` will be thrown.
+Before a `Command` is executed, the `LogicManager` check if the current user is validated using `model#getUserCreds()#isValidatedSession()`. Only `helpCommand`, `exitCommand`, and of course `loginCommand` will be executed when a user is currently not logged in. Otherwise, a `CommandException` will be thrown.
+
+In version 2.0, Address Book Pro should adopt an external security framework such as Apache Shiro to ensure more secure authentications.
 
 ==== Design Consideration
 
@@ -477,11 +483,12 @@ Once the user is logged in, every `Command` will check if the current user is va
 ---
 
 **Aspect** Changes to the GUI +
-**Alternative 1 (current choice):** Allows users to view addressbook as it automatically loads. +
-**Alternative 2:** Hides all panels except for CommandBox and ResultDisplay. Reveal other panels (e.g. PersonList) once user is logged in. +
+**Alternative 1:** Allows users to view addressbook as it automatically loads. +
+**Alternative 2 (current choice):** Hides all panels except for CommandBox and ResultDisplay. Reveal other panels (e.g. PersonList) once user is logged in. +
 **Alternative 3:** Show all panles, but only load addressbook once user is logged in. +
-**Pros:** No changes needed for GUI +
-**Cons:** Unauthorized users are still able to view the contact list, which may not be desirable
+**Pros:** Unauthorized users are unable to view contact list prior to login +
+**Cons:** Login mechanism is coupled with existing UI of the address book; Future changes to UI may affect the login mechanism.
+// end::login[]
 
 // tag::facebookProfilePicture[]
 === Contact Profile Picture
@@ -490,18 +497,20 @@ We are using `facebook4j` package as a wrapper to access Facebook's Graph API. T
 
 This class is used only in `PersonProfile` class, where there is a need to retrieve a contact's profile picture from Facebook to use as a contact profile picture. The method `facebook#getPictureURL(String userId, PictureSize size)` is used to retrieve a larger image from Facebook.
 
-[Note] The application is currently authorized with an application token that will expire in 2 months.
+[NOTE] The application is currently authorized with an application token that will expire in 2 months. +
+[NOTE] In V2.0, Address Book Pro should introduce Facebook user login and allow users to authenticate the application instead of storing application tokens.
 
 In the event that an image cannot be retrieved from Facebook, a default image stored locally would be used as the contact's profile picture.
 
-**Aspect** Retrieving a user's Facebook profile picture +
+**Aspect:** Retrieving a user's Facebook profile picture +
 **Alternative 1 (temporary fix)**: Hard code a Facebook userId, which will be used to retrieve a profile picture from the user. +
 **Alternative 2**: Figure out how to retrieve userId from a Facebook user's username or url. +
 **Alternative 3**: Introduce another 3rd party library that returns a userId from a username +
-**Pros**: Able to quickly prototype with the temporary fix +
-**Cons**: The profile picture does not match the actual contact
+**Alternative 4 (Current Solution)**: Get users to store their Facebook Id directly for immediate usage +
+**Pros**: A simple fix to easily retrieve a contact's profile picture +
+**Cons**: Facebook IDs are not usually remembered by users and may require more effort to retrieve.
 
-**Aspect** Facebook Authentication +
+**Aspect:** Facebook Authentication +
 **Alternative 1 (current choice)**: Create a Facebook application and store the app id, app secret and token in the `PersonProfile` class. +
 **Alternative 2**: Get users to log in with their own Facebook accounts and grant permission +
 **Pros**: Hassle free for users +
@@ -1258,6 +1267,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[facebook-Id]]
+Facebook Id
+
+....
+A unique integer assigned by Facebook to identify users
+....
+
+[[user-credentials]]
+User Credentials
+
+....
+The username and password of the current user, which will be used for authentication
 ....
 
 [appendix]

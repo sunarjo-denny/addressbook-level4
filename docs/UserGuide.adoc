@@ -69,11 +69,11 @@ Default username: admin
 Default password: password
 
 [NOTE]
-User must be logged in before executing commands.
+User must be logged in before executing commands, with the exception of `help`, `exit` and of course, `login`.
 
 Format:
 
-* `login usr/[enter username] pwd/[enter password]
+* `login usr/[enter username] pwd/[enter password]`
 
 Since v1.3.
 
@@ -87,7 +87,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [r/REMARK] [b/BIRTHDAY] [
 Shorthand for add: `a`
 
 [NOTE]
-Facebook represents a person's Facebook ID (a long number), rather than the Facebook username.
+Facebook represents a person's Facebook ID (a unique int number assigned to each user), rather than the Facebook username.
+
+To get your `Facebook ID`, go to this website: https://findmyfbid.com/, enter your `Facebook username` and click on `Find numeric ID`. Use the unique integer generated as input to the `facebook` field in `add`.
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -190,13 +192,14 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 // tag::search[]
 === Locating persons by details: `search`
 
-Finds persons whose details contain any of the given keywords. +
+Similar to `find` command above, but more comprehensive +
+Finds persons whose details (any field e.g. name, email, address etc.) contain the exact keyphrase. +
 Format: `search KEYPHRASE` +
 Shorthand for search: `sh`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* Keyphrase can be separated by spaces.
+* Keyphrase can contain spaces.
 * The order of the keyphrase matters. e.g. `Hans Bo` will match `Hans Bo`
 * Name, Phone, Email, Address, Remark, Tag are all searched.
 * Full or partial words will be matched e.g. `Han` will match `Hans Solo`

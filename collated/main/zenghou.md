@@ -26,6 +26,16 @@ public class UserCredsChangedEvent extends BaseEvent {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+```
 ###### /java/seedu/address/logic/commands/LoginCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -278,6 +288,17 @@ public class LoginCommandParser implements Parser<LoginCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
@@ -354,6 +375,23 @@ public class DetailsContainKeyphrasePredicate implements Predicate<ReadOnlyPerso
                 || facebookContainsKeyphrase || remarkContainsKeyphrase || tagContainsKeyphrase;
     }
 }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    @Override
+    public void setRemark(Remark remark) {
+        this.remark.set(remark);
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
 ```
 ###### /java/seedu/address/model/person/Remark.java
 ``` java
@@ -488,6 +526,54 @@ public class UserCreds {
 
 }
 ```
+###### /java/seedu/address/storage/JsonUserCredsStorage.java
+``` java
+package seedu.address.storage;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.JsonUtil;
+import seedu.address.model.user.UserCreds;
+
+/**
+ * A class to access UserCreds stored in the hard disk as a json file
+ */
+public class JsonUserCredsStorage implements UserCredsStorage {
+
+    private String filePath;
+
+    public JsonUserCredsStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override
+    public String getUserCredsFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<UserCreds> readUserCreds() throws DataConversionException, IOException {
+        return readUserCreds(filePath);
+    }
+
+    /**
+     * Similar to {@link #readUserCreds()}
+     * @param credsFilePath location of the data. Cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<UserCreds> readUserCreds(String credsFilePath) throws DataConversionException {
+        return JsonUtil.readJsonFile(credsFilePath, UserCreds.class);
+    }
+
+    @Override
+    public void saveUserCreds (UserCreds userCreds) throws IOException {
+        JsonUtil.saveJsonFile(userCreds, filePath);
+    }
+
+}
+```
 ###### /java/seedu/address/storage/Storage.java
 ``` java
     @Override
@@ -520,6 +606,56 @@ public class UserCreds {
     @Override
     public void saveUserCreds(UserCreds userCreds) throws IOException {
         userCredsStorage.saveUserCreds(userCreds);
+    }
+```
+###### /java/seedu/address/storage/UserCredsStorage.java
+``` java
+package seedu.address.storage;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.user.UserCreds;
+
+/**
+ * Represents a storage for {@link seedu.address.model.user.UserCreds}.
+ */
+public interface UserCredsStorage {
+
+    /**
+     * Returns the file path of the UserCreds data file.
+     */
+    String getUserCredsFilePath();
+
+    /**
+     * Returns UserCreds data from storage.
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<UserCreds> readUserCreds() throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link UserCreds} to the storage.
+     * @param userCreds cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveUserCreds(UserCreds userCreds) throws IOException;
+
+}
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * Fills up all the commandbox placeholder of this window.
+     */
+    void fillCommandBoxAndDisplayPanel() {
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
     }
 ```
 ###### /java/seedu/address/ui/PersonProfile.java
