@@ -793,7 +793,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-//tag::remark[]
+// tag::remark[]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
@@ -911,7 +911,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 ==== Full Solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-//tag::remark[]
+// end::undoredo[]
 
 [appendix]
 == User Stories
